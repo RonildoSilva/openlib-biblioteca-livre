@@ -1,52 +1,33 @@
-# Descrição
+# OpenLib: biblioteca livre
 
-O OpenLib é um sistema associado a um banco de dados de textos digitais que podem tanto
-ser armazenados num dispositivo que possui acesso ao sistema, quanto para download ou leitura de
-acordo com os direitos de proprietário. De início, o projeto é pertencente a comunidade livre de alunos,
-professores e colaboradores que fornecem materiais próprios.
-Tendo em vista a semelhança ao site https://www.passeidireto.com que possui mini-mundo de
-patamares nacionais, o OpenLib vincula-se mais aos arquivos disponibilizados dentro de uma universidade.
+> Modelagem e camada de persistência de um acervo digital universitário: modelo ER, esquema SQL com triggers e procedures e DAOs em Java/JDBC.
 
-#Objetivos
+![status](https://img.shields.io/badge/status-concluído-success) ![java](https://img.shields.io/badge/Java-8-blue) ![jdbc](https://img.shields.io/badge/JDBC-DAO-lightgrey) ![mysql](https://img.shields.io/badge/MySQL-5-blue)
 
-O sistema facilitará o uso e acesso rápido a documentos, trabalhos, apostilas, artigos e livros de
-modo portátil o que reduz bastante a necessidade de transportar grande quantidade de materiais
-impressos.
+## Sobre
+Projeto da disciplina de Banco de Dados (UFC, 2016). O OpenLib permite que alunos e professores cadastrem materiais digitais (título, ano, editora, autores, área, capa e link) e organizem grupos de acesso por turma. O trabalho cobre o levantamento de requisitos, o modelo entidade-relacionamento, o esquema relacional, consultas complexas, triggers e procedures, e uma camada DAO em Java.
 
-# Requisitos
+## Estrutura de pastas
+```text
+MER_Biblioteca.brM, Modelo Relacional.architect   modelos (brModelo e SQL Power Architect)
+esquema_openlib.sql                               criação das tabelas
+inserts_openlib.sql                               dados de exemplo
+power_queries.sql                                 consultas com junções, agregações e subconsultas
+triggers_procedures.sql                           regras de integridade e rotinas
+src/entity/                                       Livro, Autor, Editora, Area, Usuario, Professor, Grupo e relações N:N
+src/dao/interfaces/, src/dao/                     contratos e implementações JDBC (PreparedStatement)
+src/factory/ConnectionFactory.java                conexão MySQL
+src/main/Main.java                                demonstração
+```
 
-Usuários com acesso podem cadastrar seus próprios materiais no banco de dados, informando:
-Arquivos
+## Como executar
+```bash
+mysql -u root -p < esquema_openlib.sql && mysql -u root -p openlib < inserts_openlib.sql
+javac -d bin $(find src -name "*.java") && java -cp "bin:mysql-connector.jar" main.Main
+```
 
-* título;
-* ano de publica¸cão;
-* editora (opcional);
-* autor(es), para tanto ser útil numa citação quanto para identificar seus próprios documentos;
-* área para que se possa organizar melhor os materiais por conteúdo;
-* um link de uma imagem que mostre a capa do material ou algo que o represente graficamente;
-* link de download ou de compra do arquivo;
-* um campo para observações sobre o estado do material (completo, incompleto, amostra, se é
-livre, e-mail para feedback, sugestões...).
+## Status
+Concluído. Trabalho acadêmico; não recebe manutenção.
 
-Além de um banco de ”livros”, o sistema possuirá campos para os usuários:
-
-Usuário
-* nome
-* login
-* email
-* foto
-* curso
-
-que terão tipos de acesso diferentes:
-
-# Acessos
-* pesquisa;
-* pesquisa e acesso aos links que farão parte de um grupo.
-* e num nível de maior privilégio onde só o super user terá direito de cadastro de livros, confirmar acessos, etc.
-
-# Observações
-
-* Um usuário que publica seu próprio material é também um autor.
-* Um usuário do tipo professor, pode criar seu grupo para uma turma de alunos.
-* Como o levantamento de requisitos é um processo iterativo e incremental, alguns detalhes estão
-omitidos ou implícitos devido às futuras regras de negócio.
+## Autor
+Ronildo Silva · ronildo.comp@gmail.com
